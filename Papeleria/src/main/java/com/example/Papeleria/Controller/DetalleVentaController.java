@@ -62,4 +62,13 @@ public class DetalleVentaController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Detalle no encontrado.");
         }
     }
+
+    @GetMapping("/empleado/{idEmpleado}/cliente/{idCliente}")
+    public ResponseEntity<List<DetalleVenta>> findByDetalleVentaEmpleadoAndCliente(@PathVariable Long idEmpleado, @PathVariable Long idCliente) {
+        try {
+            return ResponseEntity.ok(service.detalleVentasEmpleadoACliente(idEmpleado, idCliente));
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(List.of()); // o null si prefieres
+        }
+    }
 }

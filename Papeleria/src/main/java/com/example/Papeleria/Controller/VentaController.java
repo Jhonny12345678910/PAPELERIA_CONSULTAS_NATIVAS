@@ -3,6 +3,7 @@ package com.example.Papeleria.Controller;
 import com.example.Papeleria.Model.Venta;
 import com.example.Papeleria.Service.VentaService;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,11 +11,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/ventas")
+@RequestMapping("/api/ventas")//http://localhost:8080/api/ventas/empleado/2/cliente/2
 @CrossOrigin(origins = "*")
 public class VentaController {
 
-    private final VentaService ventaService;
+    @Autowired
+    private VentaService ventaService;
 
     public VentaController(VentaService ventaService) {
         this.ventaService = ventaService;
@@ -51,4 +53,26 @@ public class VentaController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Venta no encontrada.");
         }
     }
+
+    @GetMapping("/empleado/{idEmpleado}")
+    public ResponseEntity<List<Venta>> findByEmpleado(@PathVariable Long idEmpleado) {
+        try {
+            return ResponseEntity.ok(ventaService.listarVentasPorEmpleado(idEmpleado));
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(List.of()); // o null si prefieres
+        }
+    }
+    @GetMapping("/empleado/{idEmpleado}/cliente/{idCliente}")
+    public ResponseEntity<List<Venta>> findByEmpleadoAndCliente(@PathVariable Long idEmpleado, @PathVariable Long idCliente) {
+        try {
+            return ResponseEntity.ok(ventaService.ventasEmpleadoACliente(idEmpleado, idCliente));
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(List.of()); // o null si prefieres
+        }
+    }
+
+
 }
+
+
+

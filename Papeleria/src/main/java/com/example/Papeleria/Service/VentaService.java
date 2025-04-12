@@ -29,5 +29,20 @@ public class VentaService {
     public void eliminarVenta(Long id) {
         ventaRepository.deleteById(id);
     }
+
+    //Ventas de un empleado
+    public List<Venta> listarVentasPorEmpleado(Long idEmpleado){
+
+        List<Venta> ventas = ventaRepository.findByEmpleadoId(idEmpleado);
+
+        return ventas;
+    }
+
+    //Ventas de un empleado a un cliente
+    public List<Venta> ventasEmpleadoACliente(Long idEmpleado, Long idCliente){
+
+        return ventaRepository.findByEmpleadoIdAndClienteId(idEmpleado, idCliente);
+    }
+
 }
 

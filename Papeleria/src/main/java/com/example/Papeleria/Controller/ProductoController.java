@@ -1,6 +1,7 @@
 package com.example.Papeleria.Controller;
 
 import com.example.Papeleria.Model.Producto;
+import com.example.Papeleria.Model.Venta;
 import com.example.Papeleria.Service.ProductoService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -61,6 +62,15 @@ public class ProductoController {
             return ResponseEntity.ok("Producto eliminado correctamente.");
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Producto no encontrado.");
+        }
+    }
+
+    @GetMapping("/proveedor/{idProveedor}")
+    public ResponseEntity<List<Producto>> findByProveedor(@PathVariable Long idProveedor) {
+        try {
+            return ResponseEntity.ok(productoService.listarProductosPorProveedor(idProveedor));
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(List.of()); // o null si prefieres
         }
     }
 }

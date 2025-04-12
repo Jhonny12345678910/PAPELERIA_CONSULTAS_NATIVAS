@@ -1,6 +1,7 @@
 package com.example.Papeleria.Service;
 
 import com.example.Papeleria.Model.Producto;
+import com.example.Papeleria.Model.Venta;
 import com.example.Papeleria.Repository.ProductoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,5 +39,13 @@ public class ProductoService {
 
     public void deleteById(Long id) {
         productoRepository.deleteById(id);
+    }
+
+    //Ventas de un empleado
+    public List<Producto> listarProductosPorProveedor(Long idProveedor){
+
+        List<Producto> productos = productoRepository.findByProveedorId(idProveedor);
+
+        return productos;
     }
 }

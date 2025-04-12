@@ -1,5 +1,6 @@
 package com.example.Papeleria.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.List;
 
@@ -15,6 +16,7 @@ public class Proveedor {
     private String correo;
     private String direccion;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "proveedor", cascade = CascadeType.ALL)
     private List<Producto> productos;
 

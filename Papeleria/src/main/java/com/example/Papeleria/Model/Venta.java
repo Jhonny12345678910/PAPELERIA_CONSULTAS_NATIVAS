@@ -1,5 +1,6 @@
 package com.example.Papeleria.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.sql.Date;
 import java.util.List;
@@ -21,6 +22,7 @@ public class Venta {
     @JoinColumn(name = "idEmpleado")
     private Empleado empleado;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL)
     private List<DetalleVenta> detalles;
 
